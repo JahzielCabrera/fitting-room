@@ -1,0 +1,17 @@
+.navbar .nav-item .nav-link {
+    color: rgba(5, 5, 5, 0.925);
+}
+
+.main-header .main-texto{
+    color: rgb(78, 78, 78);
+    font-weight: 300;
+}
+
+.main-header .wrap{
+    color: rgb(9, 78, 226);
+}
+
+.icons-footer{
+    color: rgb(9, 78, 226);
+    text-decoration: none;
+}

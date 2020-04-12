@@ -1,0 +1,160 @@
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/addons/p5.sound.min.js"></script>
+<script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+
+
+{{!-- MODALS --}}
+
+<div class="modal fade" id="modalComprar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Comprar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 style="font-weight: 300;">Para pagar <b>${{prenda.price}}</b> por <b>{{prenda.name}}</b> puedes pasar a la caja 1</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalProbar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Probar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 style="font-weight: 300;">Para probarte <b>{{prenda.name}}</b> puedes pasar al probador 1</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- /MODALS --}}
+
+
+
+<div class="app-container container">
+    <div class="nombre-prenda-container">
+        <br>
+        <h3 class="nombre-prenda text-center" id="nombre-prenda">{{prenda.name}}</h3>
+        <br>
+    </div>
+
+    <div class="form-inline justify-content-center">
+        <h3 class="precio-prenda text-center px-3" id="precio-prenda">$ {{prenda.price}}</h3>
+        <span class="badge badge-pill badge-info px-2">CH</span>
+        <span class="badge badge-pill badge-info px-2">M</span>
+        <span class="badge badge-pill badge-info px-2">G</span>
+    </div>
+    <br>
+
+    <div class="card-deck">
+        <div class="card card-body" id="card-1">
+            <img src="{{prenda.colors.color1.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c1">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-1">Seleccionar</button>
+            </div>
+            <br>
+        </div>
+        <div class="card card-body" id="card-2">
+            <img src="{{prenda.colors.color2.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c2">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-2">Seleccionar</button>
+            </div>
+            <br>
+        </div>
+        <div class="card card-body" id="card-3">
+            <img src="{{prenda.colors.color3.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c3">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-3">Seleccionar</button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+{{!-- SCRIPTS AR --}}
+<script>
+    let video;
+    let poseNet;
+    let pose;
+    let img1;
+    let img2;
+    let img3;
+
+    img1 = document.getElementById('prenda-c1').src;
+    img2 = document.getElementById('prenda-c2').src;
+    img3 = document.getElementById('prenda-c3').src;
+
+    function preload() {
+        img1 = loadImage(img1);
+        img2 = loadImage(img2);
+        img3 = loadImage(img3);
+    }
+
+    function setup() {
+        var cnv = createCanvas(1080, 880);
+        cnv.parent('sketch-holder');
+        video = createCapture(VIDEO);
+        video.hide();
+    }
+
+
+    function draw() {
+        image(video, 0, 0, 1080, 880);
+        //image(img1, 1080 / 2, 880 / 2);
+        //image(img2, 0, 0);
+        image(img3, 250, 220);
+
+    }
+</script>
+<br>
+<br>
+<br>
+<div class="container align-items-center justify-content-center">
+    <div class="" id="sketch-holder">
+
+    </div>
+</div>
+
+<div class="py-5 container">
+    <div class="align-items-center justify-content-center form-inline">
+        <div class="px-5">
+            <a href="/search" class="btn btn-primary btn-sm mx-auto" >Regresar</a>
+        </div>
+        <div class="px-5">
+            <button type="button" class="btn btn-primary btn-sm mx-auto" data-toggle="modal"
+                data-target="#modalComprar">Comprar</button>
+        </div>
+        <div class="px-5">
+            <button type="button" class="btn btn-primary btn-sm mx-auto" data-toggle="modal"
+                data-target="#modalProbar">Probar</button>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<hr>
+<br>
