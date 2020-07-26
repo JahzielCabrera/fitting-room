@@ -5,6 +5,9 @@ const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
 
+const Handlebars = require('handlebars')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
+
 // Initializations 
 const app = express();
 
@@ -14,7 +17,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
-    extname: '.hbs'
+    extname: '.hbs',
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
 app.set('view engine', '.hbs');
 
