@@ -10,6 +10,6 @@ router.get('/search', renderBuscador);
 
 router.post('/search', buscar);
 
-router.get('/app/:id', renderMostrarPrendas);
+router.get('/app/id', renderMostrarPrendas);
 
 module.exports = router;

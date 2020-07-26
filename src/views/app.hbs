@@ -68,7 +68,10 @@
     <div class="card-deck">
         <div class="card card-body" id="card-1">
             <img src="{{prenda.colors.color1.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-1">
+            <img src="{{prenda.colors.color1.SF}}" class="{{prenda.bodyPart}}" alt="..." style="width: 70%;"
                 id="prenda-c1">
+
             <div class="py-2 mx-auto">
                 <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-1">Seleccionar</button>
             </div>
@@ -76,7 +79,10 @@
         </div>
         <div class="card card-body" id="card-2">
             <img src="{{prenda.colors.color2.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-2">
+            <img src="{{prenda.colors.color2.SF}}" class="card-img-top container" alt="..." style="width: 70%;"
                 id="prenda-c2">
+
             <div class="py-2 mx-auto">
                 <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-2">Seleccionar</button>
             </div>
@@ -84,7 +90,10 @@
         </div>
         <div class="card card-body" id="card-3">
             <img src="{{prenda.colors.color3.CF}}" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-3">
+            <img src="{{prenda.colors.color3.SF}}" class="card-img-top container" alt="..." style="width: 70%;"
                 id="prenda-c3">
+
             <div class="py-2 mx-auto">
                 <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-3">Seleccionar</button>
             </div>
@@ -98,18 +107,52 @@
     let video;
     let poseNet;
     let pose;
+    let img;
     let img1;
     let img2;
     let img3;
+
+    bodyPart = document.getElementById('prenda-c1').className
+    console.log(bodyPart)
+
+    document.getElementById('prenda-c1').style.display = 'none';
+    document.getElementById('prenda-c2').style.display = 'none';
+    document.getElementById('prenda-c3').style.display = 'none';
 
     img1 = document.getElementById('prenda-c1').src;
     img2 = document.getElementById('prenda-c2').src;
     img3 = document.getElementById('prenda-c3').src;
 
+    img = img1
+
     function preload() {
         img1 = loadImage(img1);
         img2 = loadImage(img2);
         img3 = loadImage(img3);
+        img = loadImage(img)
+    }
+
+    var p1 = document.getElementById('buscar-1');
+    var p2 = document.getElementById('buscar-2');
+    var p3 = document.getElementById('buscar-3');
+
+    p1.addEventListener("click", cargarPrenda1);
+    p2.addEventListener("click", cargarPrenda2);
+    p3.addEventListener("click", cargarPrenda3);
+
+    function cargarPrenda1(){
+        console.log('prenda 1');
+        img = img1;
+    }
+
+    function cargarPrenda2(){
+        console.log('prenda 2');
+        img = img2;
+    }
+
+    function cargarPrenda3(){
+        console.log('prenda 3');
+        img = img3;
     }
 
     function setup() {
@@ -117,16 +160,60 @@
         cnv.parent('sketch-holder');
         video = createCapture(VIDEO);
         video.hide();
+        poseNet = ml5.poseNet(video, modelLoaded);
+        poseNet.on('pose', gotPoses);
     }
 
+    function gotPoses(poses){
+        console.log(poses);
+        if (poses.length > 0) {
+            pose = poses[0].pose;
+            skeleton = poses[0].skeleton;
+        }
+    }
 
-    function draw() {
+    function modelLoaded(){
+    console.log("PoseNet is ready");
+}
+
+    function draw(){
         image(video, 0, 0, 1080, 880);
+
+        const deltaPix = 30;
+
+        if (pose) {
+            if(bodyPart == 'top'){
+                console.log('es top')
+                var hDerX = pose.rightShoulder.x - deltaPix;
+                var hDerY = pose.rightShoulder.y - deltaPix;
+                var hIzqX = pose.leftShoulder.x + deltaPix;
+                var ancho = hIzqX - hDerX;
+                //var ancho = pose.leftShoulder.x - pose.rightShoulder.x;
+                //var largo = pose.rightHip.y - pose.rightShoulder.y;
+
+                image(img, hDerX, hDerY, [ancho]);
+            }
+
+            if(bodyPart == 'bottom'){
+                console.log('Es bottom')
+                var cadDerX = pose.rightHip.x - deltaPix;
+                var cadDerY = pose.rightHip.y - deltaPix;
+                var cadIzqX = pose.leftHip.x + deltaPix;
+                var ancho = cadIzqX - cadDerX;
+
+                image(img, cadDerX, cadDerY, [ancho]);
+            }
+        }
+
+}
+
+
+    //function draw() {
+        //image(video, 0, 0, 1080, 880);
         //image(img1, 1080 / 2, 880 / 2);
         //image(img2, 0, 0);
-        image(img3, 250, 220);
-
-    }
+        //image(img, 250, 220);
+    //}
 </script>
 <br>
 <br>
@@ -149,6 +236,41 @@
         <div class="px-5">
             <button type="button" class="btn btn-primary btn-sm mx-auto" data-toggle="modal"
                 data-target="#modalProbar">Probar</button>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="recomendaciones-container container">
+    <div class="title-recomendaciones">
+        <h3 class="text-center">También te recomendamos</h3>
+        <br>
+    </div>
+
+    <div class="card-deck">
+        <div class="card card-body" id="card-1">
+            <img src="https://res.cloudinary.com/dpk1tokvy/image/upload/v1595655815/prendas/Imagen_14_b12vwc.png" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c1">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-1">Seleccionar</button>
+            </div>
+            <br>
+        </div>
+        <div class="card card-body" id="card-2">
+            <img src="https://res.cloudinary.com/dpk1tokvy/image/upload/v1595655873/prendas/Imagen_19_tftvco.png" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c2">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-2">Seleccionar</button>
+            </div>
+            <br>
+        </div>
+        <div class="card card-body" id="card-3">
+            <img src="https://res.cloudinary.com/dpk1tokvy/image/upload/v1595655892/prendas/Imagen_11_islzxz.png" class="card-img-top container" alt="..." style="width: 70%;"
+                id="prenda-c3">
+            <div class="py-2 mx-auto">
+                <button type="" class="btn btn-primary btn-sm mx-auto" id="buscar-3">Seleccionar</button>
+            </div>
+            <br>
         </div>
     </div>
 </div>

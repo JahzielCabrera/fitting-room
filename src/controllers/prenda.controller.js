@@ -10,7 +10,9 @@ prendaCtrl.buscar = async (req, res) =>{
     const prendas = await Prenda.findOne({code: code});
     console.log(prendas);
     if(prendas){
-        res.redirect('/app/:id');
+        console.log(prendas._id);
+        console.log(prendas.bodyPart);
+        res.redirect('/app/id');
     }
     if(prendas==null){
         req.flash('noFindCode_message', 'Prenda no registrada');
@@ -19,11 +21,11 @@ prendaCtrl.buscar = async (req, res) =>{
 }
 
 prendaCtrl.renderMostrarPrendas = async(req, res) =>{
-    const prenda = await Prenda.findOne({code});
+    const prenda = await Prenda.findOne({code}); 
     console.log(code);
     res.render('app', { prenda });
 }
 
-module.exports = prendaCtrl;
+module.exports = prendaCtrl; 
 
 
