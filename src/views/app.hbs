@@ -179,8 +179,8 @@
     function draw(){
         image(video, 0, 0, 1080, 880);
 
-        var deltaPixX = 50;
-        var deltaPixY = 60;
+        var deltaPixX = 20;
+        var deltaPixY = 40;
 
         if (pose) {
             if(bodyPart == 'top'){
@@ -192,7 +192,7 @@
                 //var ancho = pose.leftShoulder.x - pose.rightShoulder.x;
                 //var largo = pose.rightHip.y - pose.rightShoulder.y;
 
-                image(img, hDerX, hDerY, [ancho]);
+                image(img, hDerX*1.6, hDerY*1.6, [ancho*1.8]);
             }
 
             if(bodyPart == 'bottom'){
