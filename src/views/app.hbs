@@ -179,14 +179,15 @@
     function draw(){
         image(video, 0, 0, 1080, 880);
 
-        const deltaPix = 30;
+        var deltaPixX = 50;
+        var deltaPixY = 60;
 
         if (pose) {
             if(bodyPart == 'top'){
                 console.log('es top')
-                var hDerX = pose.rightShoulder.x - deltaPix;
-                var hDerY = pose.rightShoulder.y - deltaPix;
-                var hIzqX = pose.leftShoulder.x + deltaPix;
+                var hDerX = pose.rightShoulder.x - deltaPixX;
+                var hDerY = pose.rightShoulder.y - deltaPixY;
+                var hIzqX = pose.leftShoulder.x + deltaPixX;
                 var ancho = hIzqX - hDerX;
                 //var ancho = pose.leftShoulder.x - pose.rightShoulder.x;
                 //var largo = pose.rightHip.y - pose.rightShoulder.y;
@@ -196,9 +197,9 @@
 
             if(bodyPart == 'bottom'){
                 console.log('Es bottom')
-                var cadDerX = pose.rightHip.x - deltaPix;
-                var cadDerY = pose.rightHip.y - deltaPix;
-                var cadIzqX = pose.leftHip.x + deltaPix;
+                var cadDerX = pose.rightHip.x - deltaPixX;
+                var cadDerY = pose.rightHip.y - deltaPixY;
+                var cadIzqX = pose.leftHip.x + deltaPixX;
                 var ancho = cadIzqX - cadDerX;
 
                 image(img, cadDerX, cadDerY, [ancho]);
